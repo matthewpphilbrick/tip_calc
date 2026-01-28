@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Tip Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Remove number input arrows */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .employee-entry {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .employee-entry h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+        }
+
+        .results h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-label {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .result-value {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Restaurant Tip Calculator</h1>
+        
+        <!-- Tips Section -->
+        <div class="section">
+            <h2>💰 Total Tips</h2>
+            <div class="input-group">
+                <label for="ccTips">Credit Card Tips ($)</label>
+                <input type="number" id="ccTips" step="0.01" value="0">
+            </div>
+            <div class="input-group">
+                <label for="cashTips">Cash Tips ($)</label>
+                <input type="number" id="cashTips" step="0.01" value="0">
+            </div>
+        </div>
+
+        <!-- Kitchen Section -->
+        <div class="section">
+            <h2>👨‍🍳 Kitchen Staff</h2>
+            <div class="input-group">
+                <label for="kitchenCount">Number of Kitchen Staff</label>
+                <input type="number" id="kitchenCount" min="1" value="1">
+            </div>
+        </div>
+
+        <!-- Staff Section -->
+        <div class="section">
+            <h2>👥 Front of House Staff</h2>
+            
+            <div class="employee-entry">
+                <h3>Opening Shift</h3>
+                <div class="input-group">
+                    <label for="openName">Name</label>
+                    <input type="text" id="openName" value="">
+                </div>
+                <div class="input-group">
+                    <label for="openHours">Hours Worked</label>
+                    <input type="number" id="openHours" step="0.1" min="0" value="0">
+                </div>
+            </div>
+
+            <div class="employee-entry">
+                <h3>Swing Shift</h3>
+                <div class="input-group">
+                    <label for="swingName">Name</label>
+                    <input type="text" id="swingName" value="">
+                </div>
+                <div class="input-group">
+                    <label for="swingHours">Hours Worked</label>
+                    <input type="number" id="swingHours" step="0.1" min="0" value="0">
+                </div>
+            </div>
+
+            <div class="employee-entry">
+                <h3>Closing Shift</h3>
+                <div class="input-group">
+                    <label for="closeName">Name</label>
+                    <input type="text" id="closeName" value="">
+                </div>
+                <div class="input-group">
+                    <label for="closeHours">Hours Worked</label>
+                    <input type="number" id="closeHours" step="0.1" min="0" value="0">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="calculateTips()">Calculate Tips</button>
+
+        <div id="results" class="results hidden">
+            <h2>📊 Results</h2>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Prevent number inputs from changing on scroll
+        document.addEventListener('wheel', function(e) {
+            if (document.activeElement.type === 'number') {
+                document.activeElement.blur();
+            }
+        });
+
+        function calculateTips() {
+            // Get input values
+            var ccTips = parseFloat(document.getElementById('ccTips').value) || 0;
+            var cashTips = parseFloat(document.getElementById('cashTips').value) || 0;
+            var totalTips = ccTips + cashTips;
+            
+            var kitchenCount = parseInt(document.getElementById('kitchenCount').value) || 1;
+            
+            var openName = document.getElementById('openName').value || 'Opening';
+            var openHours = parseFloat(document.getElementById('openHours').value) || 0;
+            
+            var swingName = document.getElementById('swingName').value || 'Swing';
+            var swingHours = parseFloat(document.getElementById('swingHours').value) || 0;
+            
+            var closeName = document.getElementById('closeName').value || 'Closing';
+            var closeHours = parseFloat(document.getElementById('closeHours').value) || 0;
+            
+            // Calculate kitchen tips (10% of total)
+            var kitchenPer = (totalTips * 0.10) / kitchenCount;
+            var kitchenPerRounded = Math.round(kitchenPer);
+            var tipsLeft = totalTips - (kitchenPerRounded * kitchenCount);
+            
+            // Calculate hourly rate and individual tips
+            var totalHours = openHours + swingHours + closeHours;
+            var hourly = tipsLeft / totalHours;
+            var openTip = Math.round(openHours * hourly);
+            var swingTip = Math.round(swingHours * hourly);
+            var closeTip = Math.round(closeHours * hourly);
+            
+            // Calculate margin
+            var margin = tipsLeft - openTip - swingTip - closeTip;
+            
+            // Display results
+            var resultsHTML = '';
+            resultsHTML += '<div class="result-item highlight">';
+            resultsHTML += '<span class="result-label">Total Tips for Tonight</span>';
+            resultsHTML += '<span class="result-value">$' + totalTips.toFixed(2) + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">Kitchen Tips (per person)</span>';
+            resultsHTML += '<span class="result-value">$' + kitchenPerRounded + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">Remaining Tipout</span>';
+            resultsHTML += '<span class="result-value">$' + tipsLeft.toFixed(2) + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">Hourly Rate</span>';
+            resultsHTML += '<span class="result-value">$' + hourly.toFixed(2) + '/hr</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">' + openName + ' (' + openHours + ' hrs)</span>';
+            resultsHTML += '<span class="result-value">$' + openTip + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">' + swingName + ' (' + swingHours + ' hrs)</span>';
+            resultsHTML += '<span class="result-value">$' + swingTip + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item">';
+            resultsHTML += '<span class="result-label">' + closeName + ' (' + closeHours + ' hrs)</span>';
+            resultsHTML += '<span class="result-value">$' + closeTip + '</span>';
+            resultsHTML += '</div>';
+            
+            resultsHTML += '<div class="result-item' + (margin !== 0 ? ' error' : '') + '">';
+            resultsHTML += '<span class="result-label">Tips Off By</span>';
+            resultsHTML += '<span class="result-value">$' + margin + '</span>';
+            resultsHTML += '</div>';
+            
+            document.getElementById('resultsContent').innerHTML = resultsHTML;
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
